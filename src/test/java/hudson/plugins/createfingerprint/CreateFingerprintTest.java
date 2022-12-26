@@ -1,7 +1,7 @@
 /*
  *  The MIT License
  *
- *  Copyright 2011 Yahoo!, Inc.
+ *  Copyright 2011-2012 Marc Sanfacon
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +29,19 @@ import hudson.model.FreeStyleProject;
 import hudson.model.FreeStyleBuild;
 import hudson.tasks.Fingerprinter;
 import hudson.tasks.Fingerprinter.FingerprintAction;
-import org.jvnet.hudson.test.HudsonTestCase;
+import org.jvnet.hudson.test.JenkinsRule;
+
 import java.util.Collection;
 import java.io.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Marc Sanfacon
  */
-public class CreateFingerprintTest extends HudsonTestCase {
+public class CreateFingerprintTest extends JenkinsRule {
     public void testConfigRoundtrip() throws Exception {
 
         // Create a test file to create the fingerprint

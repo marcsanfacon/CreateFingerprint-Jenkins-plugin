@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright (c) 2004-2009, Sun Microsystems, Inc., Kohsuke Kawaguchi, Tom Huybrechts
+ *  Copyright 2011-2012 Marc Sanfacon
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,8 @@ import hudson.model.BuildListener;
 import hudson.model.Descriptor;
 import hudson.tasks.Builder;
 import hudson.tasks.Fingerprinter;
+import hudson.tasks.BuildStepDescriptor;
+import hudson.model.AbstractProject;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
@@ -58,15 +60,19 @@ public class CreateFingerprint extends Builder {
     }
 
     @Override
-    public boolean perform(AbstractBuild<?,?> build, Launcher launcher, BuildListener listener) throws InterruptedException {
+    public boolean perform(AbstractBuild<?,?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
         Fingerprinter fingerprinter = new Fingerprinter(this.targets, false);
         return fingerprinter.perform(build, launcher, listener);
     }
 
     @Extension
-    public static final class DescriptorImpl extends Descriptor<Builder> {
+    public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
         public String getDisplayName() {
             return Messages.CreateFingerprint_DisplayName();
+        }
+
+        public boolean isApplicable(Class<? extends AbstractProject> jobType) {
+            return true;
         }
     }
 }
